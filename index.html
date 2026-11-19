@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A five-minute habit for judging poker decisions before the results, by Tanush Aggarwal.">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}</style>
+<title>Lost the Hand, Played It Right</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single editorial column, hairline-ruled sections, large serif headlines with one gold italic phrase, mono labels. The 2x2 stands where a portrait would sit. */
+:root {
+  --bg: #FFFFFF;
+  --ink: #161614;
+  --soft: #5F5E5A;
+  --head: #85847F;
+  --gold: #8A6D2C;
+  --rule: #161614;
+  --hair: #DAD8D2;
+  --panel: #F6F5F1;
+  --good: #2C6849; --good-bg: #E3F0E8;
+  --beat: #8A6D2C; --beat-bg: #F4ECD8;
+  --luck: #9A5A12; --luck-bg: #F8E7D3;
+  --bad: #9C3B2E; --bad-bg: #F6E0DC;
+  --font-display: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111110; --ink: #EFEDE6; --soft: #A8A59D; --head: #8E8B84; --gold: #CDAB5E;
+    --rule: #EFEDE6; --hair: #34332F; --panel: #1A1A18;
+    --good: #6CC096; --good-bg: #16291F; --beat: #CDAB5E; --beat-bg: #2B2414;
+    --luck: #E9A55B; --luck-bg: #2E2212; --bad: #E58B7D; --bad-bg: #2E1A17;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111110; --ink: #EFEDE6; --soft: #A8A59D; --head: #8E8B84; --gold: #CDAB5E;
+  --rule: #EFEDE6; --hair: #34332F; --panel: #1A1A18;
+  --good: #6CC096; --good-bg: #16291F; --beat: #CDAB5E; --beat-bg: #2B2414;
+  --luck: #E9A55B; --luck-bg: #2E2212; --bad: #E58B7D; --bad-bg: #2E1A17;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 300 17px/1.65 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 20; }
+.wrap { max-width: 960px; margin: 0 auto; }
+p { margin: 0; max-width: 62ch; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.mono { font: 400 0.74rem/1.4 var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; }
+.ph { border-bottom: 1px dashed var(--gold); font-style: italic; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); border-bottom: 1px solid var(--rule); }
+.nav .in { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+.mark { font: italic 400 1.7rem/1 var(--font-display); color: var(--head); text-decoration: none; }
+.mark span { color: var(--gold); }
+.nav-r { display: flex; align-items: center; gap: 22px; }
+.nav-r a { text-decoration: none; }
+.nav-r .btn-o { border: 1px solid var(--rule); padding: 12px 18px; color: var(--soft); }
+.nav-r a:hover { color: var(--gold); }
+
+/* hero */
+.hero { padding-block: 88px 56px; }
+.hero .eyebrow { color: var(--ink); }
+.hero h1 { font: 400 clamp(3.4rem, 11.5vw, 7.4rem)/0.9 var(--font-display); letter-spacing: -0.028em; color: var(--head); margin: 28px 0 0; text-wrap: balance; }
+.hero h1 em { display: block; font-style: italic; color: var(--gold); margin-top: 0.12em; }
+.lede { margin-top: 36px; font-size: 1.15rem; color: var(--soft); max-width: 40em; }
+.lede .ph { color: var(--ink); }
+.cta { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+.cta a { text-decoration: none; padding: 16px 22px; border: 1px solid transparent; }
+.cta a.o { border-color: var(--rule); color: var(--soft); }
+.cta a:hover { color: var(--gold); }
+.links { display: flex; gap: 26px; margin-top: 34px; flex-wrap: wrap; color: var(--soft); }
+.links a { text-decoration: none; }
+.links a:hover { color: var(--gold); }
+
+/* figure */
+.fig { border: 1px solid var(--rule); padding: 28px; display: grid; gap: 20px; }
+.fig .cap { color: var(--soft); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.grid2 { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.ax { color: var(--soft); display: flex; align-items: center; justify-content: center; font: 400 0.68rem var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.ax.row { writing-mode: vertical-rl; transform: rotate(180deg); }
+.q { padding: 20px; min-height: 150px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; min-width: 0; }
+.q .t { font: 400 0.68rem var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.q b { font: 400 1.9rem/1.05 var(--font-display); letter-spacing: -0.01em; font-weight: 400; }
+.q span.d { font-size: 0.9rem; line-height: 1.45; color: var(--soft); }
+.q.good { background: var(--good-bg); } .q.good .t { color: var(--good); }
+.q.beat { background: var(--beat-bg); } .q.beat .t { color: var(--beat); }
+.q.luck { background: var(--luck-bg); } .q.luck .t { color: var(--luck); }
+.q.bad { background: var(--bad-bg); } .q.bad .t { color: var(--bad); }
+
+.scrollrow { display: flex; justify-content: space-between; gap: 12px; padding-block: 56px 40px; color: var(--ink); }
+
+/* sections */
+section { border-top: 1px solid var(--rule); padding-block: 92px; }
+.label { color: var(--ink); padding-left: 36px; }
+h2 { font: 400 clamp(2.6rem, 7.4vw, 4.6rem)/0.95 var(--font-display); letter-spacing: -0.025em; color: var(--head); margin: 28px 0 0; text-wrap: balance; }
+h2 em { font-style: italic; color: var(--gold); }
+.sub { margin-top: 26px; color: var(--soft); font-size: 1.1rem; }
+
+/* about */
+.about { margin-top: 48px; border-top: 1px solid var(--hair); }
+.about .row { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 8px 24px; padding: 22px 0; border-bottom: 1px solid var(--hair); }
+.about .row .mono { color: var(--ink); padding-top: 5px; }
+.about .row p { max-width: none; color: var(--ink); font-size: 1.05rem; }
+.about .row small { display: block; color: var(--soft); font-size: 0.92rem; margin-top: 4px; }
+@media (max-width: 520px) { .about .row { grid-template-columns: minmax(0, 1fr); } }
+
+/* sources */
+.cites { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 52px; border-top: 1px solid var(--hair); }
+.cite { padding: 28px 24px 28px 0; display: grid; gap: 10px; align-content: start; min-width: 0; border-bottom: 1px solid var(--hair); }
+.cite .n { font: 400 0.8rem var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+.cite .w { font: italic 400 1.7rem/1.1 var(--font-display); color: var(--head); }
+.cite p { font-size: 0.95rem; color: var(--soft); }
+.cite a { color: var(--gold); text-decoration: none; }
+.cite a:hover { text-decoration: underline; }
+
+/* approach */
+.dropcap { margin-top: 56px; font-size: 1.5rem; line-height: 1.4; color: var(--soft); max-width: 34em; }
+.dropcap::first-letter { font: 400 5.4rem/0.78 var(--font-display); float: left; color: var(--gold); padding: 0.07em 0.09em 0 0; }
+.kicker { font: italic 400 1.9rem/1.2 var(--font-display); color: var(--gold); margin: 22px 0 0 1.95em; }
+.pr { margin-top: 80px; display: grid; gap: 52px; }
+.pr .n { font: 400 0.8rem var(--font-mono); color: var(--gold); letter-spacing: 0.1em; }
+.pr h3 { font: 400 clamp(1.9rem, 4.4vw, 2.6rem)/1.05 var(--font-display); letter-spacing: -0.02em; color: var(--head); margin: 10px 0 12px; }
+.pr p { color: var(--soft); }
+
+/* stats */
+.stats { margin-top: 60px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 40px; }
+.stat .big { font: 400 clamp(3.6rem, 10vw, 6rem)/0.95 var(--font-display); letter-spacing: -0.03em; color: var(--head); font-variant-numeric: lining-nums; }
+.stat .k { margin-top: 12px; color: var(--soft); }
+.stat p { margin-top: 6px; font-size: 0.98rem; color: var(--ink); }
+.stat a { color: var(--gold); text-underline-offset: 3px; }
+
+/* work */
+.cards { margin-top: 56px; display: grid; gap: 0; }
+.card { border: 1px solid var(--rule); margin-top: -1px; padding: 32px; display: grid; gap: 16px; }
+.card .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.card .top .n { color: var(--gold); }
+.card .tag { color: var(--ink); border: 1px solid var(--hair); padding: 5px 9px; }
+.card h3 { font: 400 clamp(2rem, 5vw, 2.9rem)/1.02 var(--font-display); letter-spacing: -0.02em; color: var(--head); margin: 6px 0 0; }
+.card h3 + .it { font: italic 400 1.45rem/1.2 var(--font-display); color: var(--gold); }
+.card p { color: var(--soft); }
+.card .meta { border-top: 1px solid var(--hair); padding-top: 16px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between; color: var(--ink); }
+.card .meta a { color: var(--gold); text-decoration: none; }
+.card .meta a:hover { text-decoration: underline; }
+.persona { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.persona div { border-top: 1px solid var(--hair); padding-top: 12px; }
+.persona .mono { color: var(--soft); display: block; margin-bottom: 6px; }
+.persona p { font-size: 0.95rem; color: var(--ink); }
+
+/* tool */
+.tool { margin-top: 52px; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 0; border: 1px solid var(--rule); }
+.tool > div { padding: 28px; display: grid; gap: 22px; align-content: start; min-width: 0; }
+.tool > div + div { border-left: 1px solid var(--rule); background: var(--panel); }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
+legend { font: 400 1.6rem/1.1 var(--font-display); color: var(--head); padding: 0; margin-bottom: 8px; }
+.hint { font-size: 0.88rem; color: var(--soft); }
+.prompts { margin: 0; padding-left: 1.1em; color: var(--soft); font-size: 0.92rem; display: grid; gap: 3px; }
+textarea { width: 100%; min-height: 84px; resize: vertical; font: 400 0.9rem/1.5 var(--font-mono); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); padding: 12px; border-radius: 0; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { display: block; text-align: center; padding: 13px 10px; border: 1px solid var(--hair); cursor: pointer; font: 400 0.74rem var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; background: var(--bg); color: var(--soft); }
+.seg input:checked + label { border-color: var(--gold); color: var(--ink); box-shadow: inset 0 0 0 1px var(--gold); }
+.seg input:focus-visible + label { outline: 2px solid var(--gold); outline-offset: 2px; }
+.go { font: 400 0.78rem var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; padding: 16px 20px; border: 1px solid var(--rule); background: var(--ink); color: var(--bg); cursor: pointer; justify-self: start; }
+.go:hover { background: var(--gold); border-color: var(--gold); }
+.verdict { padding: 20px; display: grid; gap: 6px; background: var(--bg); border: 1px solid var(--hair); }
+.verdict b { font: 400 1.7rem/1.1 var(--font-display); font-weight: 400; }
+.verdict span { color: var(--soft); font-size: 0.95rem; }
+.verdict.good { background: var(--good-bg); border-color: transparent; } .verdict.beat { background: var(--beat-bg); border-color: transparent; }
+.verdict.luck { background: var(--luck-bg); border-color: transparent; } .verdict.bad { background: var(--bad-bg); border-color: transparent; }
+.counts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.counts div { padding: 12px 6px; text-align: center; font: 400 0.64rem/1.3 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); border: 1px solid var(--hair); background: var(--bg); }
+.counts strong { display: block; font: 400 2rem/1 var(--font-display); color: var(--ink); font-variant-numeric: lining-nums; margin-bottom: 4px; }
+.summary { font: italic 400 1.35rem/1.25 var(--font-display); color: var(--gold); }
+.log { display: grid; }
+.li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 12px 0; border-top: 1px solid var(--hair); font-size: 0.92rem; }
+.li .pill { font: 400 0.62rem var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 8px; white-space: nowrap; color: var(--ink); }
+.pill.good { background: var(--good-bg); } .pill.beat { background: var(--beat-bg); } .pill.luck { background: var(--luck-bg); } .pill.bad { background: var(--bad-bg); }
+.li .note { overflow-wrap: anywhere; color: var(--ink); }
+.li small { display: block; font: 400 0.7rem var(--font-mono); color: var(--soft); margin-top: 3px; letter-spacing: 0.04em; }
+.x { background: none; border: 0; cursor: pointer; color: var(--soft); font: 400 0.68rem var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; padding: 4px; }
+.x:hover { color: var(--bad); }
+
+/* contact */
+.big-cta { font: 400 clamp(3rem, 10vw, 6.4rem)/0.92 var(--font-display); letter-spacing: -0.03em; color: var(--head); margin: 32px 0 0; }
+.big-cta em { font-style: italic; color: var(--gold); }
+.rows { margin-top: 52px; display: grid; gap: 22px; }
+.rows div { display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+.rows .v { font: italic 400 1.9rem/1.1 var(--font-display); color: var(--head); overflow-wrap: anywhere; }
+.rows a.v { text-decoration: none; }
+.rows a.v:hover { color: var(--gold); }
+.signed { margin-top: 84px; border-left: 1px solid var(--rule); padding-left: 22px; display: grid; gap: 6px; }
+.signed .nm { font: italic 400 2rem/1.1 var(--font-display); color: var(--head); }
+.signed p { font-size: 0.95rem; color: var(--soft); }
+
+footer { border-top: 1px solid var(--rule); padding-block: 36px 64px; display: grid; gap: 16px; }
+footer .mono { text-align: center; color: var(--ink); }
+footer p { color: var(--soft); font-size: 0.88rem; max-width: 76ch; margin-inline: auto; text-align: center; }
+
+@media (max-width: 820px) {
+  .cites { grid-template-columns: minmax(0, 1fr); }
+  .tool { grid-template-columns: minmax(0, 1fr); }
+  .tool > div + div { border-left: 0; border-top: 1px solid var(--rule); }
+  .persona { grid-template-columns: minmax(0, 1fr); }
+  section { padding-block: 64px; }
+  .hero { padding-block: 56px 40px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16px; }
+  .stats { grid-template-columns: minmax(0, 1fr); gap: 44px; }
+  .fig { padding: 16px; }
+  .q { padding: 14px; min-height: 124px; }
+  .q b { font-size: 1.5rem; }
+  .card, .tool > div { padding: 20px; }
+  .label { padding-left: 0; }
+  .kicker { margin-left: 0; }
+  .nav-r { gap: 14px; }
+  .counts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="in">
+    <a class="mark" href="#top">good bet<span>.</span></a>
+    <div class="nav-r">
+      <a class="mono" href="https://claude.ai/artifact/SCbTuSB5M5NCyfmfwyNkws" target="_blank" rel="noopener">Essay &#8599;</a>
+      <a class="mono btn-o" href="#try">Try it</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="top">
+  <div class="hero">
+    <div class="mono eyebrow">Poker / Decision review</div>
+    <h1>Lost the hand.<em>Played it right.</em></h1>
+    <p class="lede">I'm Tanush Aggarwal. I study data science at UC San Diego and build AI products. This site is about one idea from poker that reaches well past it: judge the decision before the result. Below is a five-minute habit for doing that.</p>
+    <div class="cta">
+      <a class="mono" href="#evidence">See the evidence &#8594;</a>
+      <a class="mono o" href="#try">Review a hand</a>
+    </div>
+    <div class="links mono">
+      <a href="https://claude.ai/artifact/SCbTuSB5M5NCyfmfwyNkws" target="_blank" rel="noopener">Essay &#8599;</a>
+      <a href="#try">Tool</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </div>
+
+  <div class="fig" role="img" aria-label="Two by two grid. Rows are decision quality, columns are result. Good decision and won: earned, keep doing it. Good decision and lost: bad beat, change nothing. Bad decision and won: lucky, fix it anyway. Bad decision and lost: deserved, learn from it.">
+    <div class="cap mono"><span>Fig. 01 &#8212; The four boxes</span><span>Every hand lands in one</span></div>
+    <div class="grid2">
+      <div></div>
+      <div class="ax">Won</div>
+      <div class="ax">Lost</div>
+      <div class="ax row">Good decision</div>
+      <div class="q good"><span class="t">Earned</span><b>Keep doing it</b><span class="d">The process worked and so did the result.</span></div>
+      <div class="q beat"><span class="t">Bad beat</span><b>Change nothing</b><span class="d">Right play, wrong outcome. That is variance.</span></div>
+      <div class="ax row">Bad decision</div>
+      <div class="q luck"><span class="t">Lucky</span><b>Fix it anyway</b><span class="d">It paid, so it feels fine. It is the costly one.</span></div>
+      <div class="q bad"><span class="t">Deserved</span><b>Learn from it</b><span class="d">The lesson in this hand is real.</span></div>
+    </div>
+  </div>
+
+  <div class="scrollrow mono"><span>Scroll for evidence</span><span>&#8595; 01 / 07</span></div>
+
+  <section id="about">
+    <div class="label mono">// 01 &#8212; About</div>
+    <h2>Who's behind <em>this.</em></h2>
+    <p class="sub">I'm Tanush Aggarwal, a Data Science student at UC San Diego. I made this site for a writing project. The idea comes from poker, and it applies to any decision made without all the facts.</p>
+    <div class="about">
+      <div class="row"><span class="mono">Studying</span><p>B.S. Data Science, UC San Diego<small>Junior transfer, expected June 2028. Coursework includes Exploratory Data Analysis and Statistical Methods.</small></p></div>
+      <div class="row"><span class="mono">Working</span><p>Artificial Intelligence Engineer, NeuralSeek<small>AI intern in summer 2025, full-time AI engineer since May 2026.</small></p></div>
+      <div class="row"><span class="mono">Built</span><p>StudyFloww, TubeIntel and a real-time exercise detector<small>StudyFloww, an AI study-scheduling platform, onboarded 50+ beta users.</small></p></div>
+      <div class="row"><span class="mono">Certified</span><p>Microsoft AI Product Manager professional certificate<small>June 2026.</small></p></div>
+    </div>
+    <p class="sub">The link to poker is a habit from my own work. As an AI intern I benchmarked a retrieval pipeline and iterated on its settings to improve output quality in a measurable way. The hand review asks for the same discipline: judge the process with evidence.</p>
+  </section>
+
+  <section id="evidence">
+    <div class="label mono">// 02 &#8212; Studied</div>
+    <h2>Teachers whose work <em>shaped this.</em></h2>
+    <p class="sub">I'm not a pro, so I started by reading the people who are. Each one below is a page I opened.</p>
+    <div class="cites">
+      <div class="cite">
+        <span class="n">Annie Duke</span>
+        <span class="w">Thinking in Bets</span>
+        <p>Named the mistake: resulting. Judging a decision by how it turned out.</p>
+        <a class="mono" href="https://www.annieduke.com/how-to-make-the-right-decisions-even-when-you-dont-have-all-the-facts/" target="_blank" rel="noopener">Read the page &#8599;</a>
+      </div>
+      <div class="cite">
+        <span class="n">Jared Tendler</span>
+        <span class="w">The Mental Game of Poker</span>
+        <p>Turns tilt and pressure into a process, with worksheets players actually fill in.</p>
+        <a class="mono" href="https://www.fearlessriver.com/mental-game-poker-course/" target="_blank" rel="noopener">Read the page &#8599;</a>
+      </div>
+      <div class="cite">
+        <span class="n">Phil Galfond</span>
+        <span class="w">Beyond the Game</span>
+        <p>Treats decision quality and the life around poker as one subject.</p>
+        <a class="mono" href="https://www.philgalfond.com/coaching/" target="_blank" rel="noopener">Read the page &#8599;</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <div class="label mono">// 03 &#8212; Approach</div>
+    <h2>How I think about <em>poker decisions.</em></h2>
+    <p class="dropcap">Winning a hand is easy. Judging your own decision honestly is the hard part.</p>
+    <p class="kicker">That is the habit this site teaches.</p>
+    <div class="pr">
+      <div><div class="n">01</div><h3>Decision first, result second</h3><p>Cover the result and ask what I knew when I acted. Call the decision good or bad. Only then do I look at how the hand ended.</p></div>
+      <div><div class="n">02</div><h3>Honesty runs both ways</h3><p>A bad decision that wins goes in a bad-decision box, same as one that loses. Luck cannot excuse a mistake, and a win cannot hide one.</p></div>
+      <div><div class="n">03</div><h3>Small enough to keep</h3><p>One or two hands, five minutes, right after the session. A small habit I keep beats a perfect one I skip.</p></div>
+      <div><div class="n">04</div><h3>Name the source</h3><p>Every idea here came from someone, and I link the page I read. I am still learning, so I say so.</p></div>
+    </div>
+  </section>
+
+  <section id="numbers">
+    <div class="label mono">// 04 &#8212; By the numbers</div>
+    <h2>Numbers <em>you can check.</em></h2>
+    <p class="sub">The first two come from pages anyone can open. The last two describe my own method.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="big">&lt;2%</div>
+        <div class="k mono">Chance of interception</div>
+        <p>Seattle's goal-line pass in Super Bowl XLIX, from 15 years of league data, <a href="https://www.annieduke.com/how-to-make-the-right-decisions-even-when-you-dont-have-all-the-facts/" target="_blank" rel="noopener">per Annie Duke</a>.</p>
+      </div>
+      <div class="stat">
+        <div class="big">600+</div>
+        <div class="k mono">Poker players coached</div>
+        <p>By mental game coach Jared Tendler, <a href="https://www.fearlessriver.com/mental-game-poker-course/" target="_blank" rel="noopener">per Fearless River</a>.</p>
+      </div>
+      <div class="stat">
+        <div class="big">4</div>
+        <div class="k mono">Boxes</div>
+        <p>Earned, bad beat, lucky, deserved. Every reviewed hand lands in exactly one.</p>
+      </div>
+      <div class="stat">
+        <div class="big">5 min</div>
+        <div class="k mono">Per review</div>
+        <p>One or two hands, judged right after the session.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="label mono">// 05 &#8212; Work</div>
+    <h2>What <em>I built.</em></h2>
+    <p class="sub">Three pieces, one idea: judge the bet before you look at the river.</p>
+    <div class="cards">
+      <article class="card">
+        <div class="top"><span class="n mono">01</span><span class="tag mono">Essay</span></div>
+        <h3>Good Bet, Bad Beat</h3>
+        <div class="it">Why poker players should stop grading themselves by the money.</div>
+        <p>A long-form essay on resulting, the Super Bowl call everyone remembers, and a five-minute hand review. It includes the strongest objections and a sources list of pages I opened.</p>
+        <div class="meta mono"><span>Resulting &#183; Outcome-blind review</span><a href="https://claude.ai/artifact/SCbTuSB5M5NCyfmfwyNkws" target="_blank" rel="noopener">Read the essay &#8599;</a></div>
+      </article>
+      <article class="card">
+        <div class="top"><span class="n mono">02</span><span class="tag mono">Tool</span></div>
+        <h3>The five-minute hand review</h3>
+        <div class="it">One hand in, one box out.</div>
+        <p>A sorter that asks for the decision before the result, then tells you which of the four boxes the hand belongs in. It runs on this page and saves entries only in your own browser.</p>
+        <div class="meta mono"><span>Runs below</span><a href="#try">Try it &#8595;</a></div>
+      </article>
+      <article class="card">
+        <div class="top"><span class="n mono">03</span><span class="tag mono">Reader</span></div>
+        <h3>Marcus</h3>
+        <div class="it">The player I wrote all of this for.</div>
+        <p>Marcus is an invented reader, a newer player who judges nights by the money, so the writing speaks to one person instead of everyone.</p>
+        <div class="persona">
+          <div><span class="mono">Who</span><p>27, IT support. Plays low-stakes online and live games on weekends.</p></div>
+          <div><span class="mono">Believes</span><p>Good players win and bad players lose, so a bad night means a bad game.</p></div>
+          <div><span class="mono">Needs to trust me</span><p>A plain voice, my own mistakes shown, and something free he can use tonight.</p></div>
+        </div>
+        <div class="meta mono"><span>Audience avatar</span><span>Invented persona</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="try">
+    <div class="label mono">// 06 &#8212; Try it</div>
+    <h2>Review <em>one hand.</em></h2>
+    <p class="sub">Pick the hand that bothered you most. Judge the decision first, then enter what happened.</p>
+    <div class="tool">
+      <div>
+        <form id="rf" autocomplete="off" style="display:grid;gap:22px">
+          <fieldset>
+            <legend>1. Describe the hand</legend>
+            <textarea id="note" maxlength="240" placeholder="Example: KQ suited, called a 3-bet in position, missed the flop, folded to a bet."></textarea>
+          </fieldset>
+          <fieldset>
+            <legend>2. Judge the decision</legend>
+            <ul class="prompts">
+              <li>What did I know when I acted?</li>
+              <li>What hands did I think they had?</li>
+              <li>Was the price worth my chance of winning?</li>
+            </ul>
+            <div class="seg">
+              <input type="radio" name="decision" id="d-good" value="good"><label for="d-good">Good decision</label>
+              <input type="radio" name="decision" id="d-bad" value="bad"><label for="d-bad">Bad decision</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>3. What happened?</legend>
+            <div class="seg">
+              <input type="radio" name="result" id="r-won" value="won"><label for="r-won">Won the hand</label>
+              <input type="radio" name="result" id="r-lost" value="lost"><label for="r-lost">Lost the hand</label>
+            </div>
+          </fieldset>
+          <button class="go" type="submit">Sort this hand</button>
+          <p class="hint" id="msg" role="status">Pick a decision and a result to continue.</p>
+        </form>
+      </div>
+      <div>
+        <div class="verdict" id="verdict" aria-live="polite"><b>Your verdict appears here</b><span>It names the box and what to do with it.</span></div>
+        <div class="counts" id="counts"></div>
+        <div class="summary" id="summary"></div>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="label mono">// 07 &#8212; Let's talk</div>
+    <div class="big-cta">Judge the <em>decision</em> first.</div>
+    <p class="sub">If you are a newer player who grades nights by the money, or a stronger player who can tell me where my reviews go wrong, I would like to hear from you.</p>
+    <div class="rows">
+      <div><span class="mono">Email</span><span class="v">tanushaggarwalwork@gmail.com</span></div>
+      <div><span class="mono">LinkedIn</span><a class="v" href="https://www.linkedin.com/in/tanushag" target="_blank" rel="noopener">tanushag</a></div>
+      <div><span class="mono">GitHub</span><a class="v" href="https://github.com/tanushaggarwal" target="_blank" rel="noopener">tanushaggarwal</a></div>
+      <div><span class="mono">Essay</span><a class="v" href="https://claude.ai/artifact/SCbTuSB5M5NCyfmfwyNkws" target="_blank" rel="noopener">Good Bet, Bad Beat</a></div>
+    </div>
+    <div class="signed">
+      <span class="mono">Signed</span>
+      <span class="nm">Tanush Aggarwal</span>
+      <p>UC San Diego &#183; 2026</p>
+    </div>
+  </section>
+
+  <footer id="sources">
+    <div class="mono">&#169; 2026 Tanush Aggarwal</div>
+    <p>Pages I read for this site: <a href="https://www.annieduke.com/how-to-make-the-right-decisions-even-when-you-dont-have-all-the-facts/" target="_blank" rel="noopener">Annie Duke</a>, <a href="https://www.fearlessriver.com/mental-game-poker-course/" target="_blank" rel="noopener">Fearless River (Jared Tendler)</a>, <a href="https://www.philgalfond.com/coaching/" target="_blank" rel="noopener">Phil Galfond</a>, <a href="https://athenarium.com/?p=678" target="_blank" rel="noopener">Athenarium</a>.</p>
+    <p>Drafted and built with help from Claude, an AI assistant made by Anthropic. The topic, the reader and the choices are mine to check and change.</p>
+    <p>Educational only, not financial advice. Poker involves risk of loss. Play with money you can afford to lose.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var KEY = "lost-the-hand-v1";
+  var BOX = {
+    "good-won":  { c: "good", n: "Earned", t: "Keep doing it. The process worked this time." },
+    "good-lost": { c: "beat", n: "Bad beat", t: "Variance, not a mistake. Do not change this play because of one result." },
+    "bad-won":   { c: "luck", n: "Lucky", t: "The costly one. It paid, so it feels fine. Fix it before it costs you." },
+    "bad-lost":  { c: "bad",  n: "Deserved", t: "The lesson here is real. Write down what you would do differently." }
+  };
+  var SEED = [
+    { id: "s1", note: "AA all-in preflop against a looser range, lost to a river two-outer.", d: "good", r: "lost", ex: 1 },
+    { id: "s2", note: "Called a big river bet with bottom pair out of curiosity, won.", d: "bad", r: "won", ex: 1 },
+    { id: "s3", note: "Folded top pair to heavy pressure from a tight player, was right.", d: "good", r: "won", ex: 1 }
+  ];
+  var list = read();
+  function read() {
+    try { var s = localStorage.getItem(KEY); if (s) { var a = JSON.parse(s); if (Array.isArray(a)) return a; } } catch (e) {}
+    return SEED.slice();
+  }
+  function write() { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} }
+  function k(e) { return e.d + "-" + e.r; }
+
+  var form = document.getElementById("rf"), msg = document.getElementById("msg"), verdict = document.getElementById("verdict"),
+      logEl = document.getElementById("log"), counts = document.getElementById("counts"), summary = document.getElementById("summary"),
+      note = document.getElementById("note");
+
+  function showVerdict(key) {
+    var b = BOX[key];
+    verdict.className = "verdict " + b.c;
+    verdict.textContent = "";
+    var h = document.createElement("b"); h.textContent = b.n + ": " + (key.indexOf("good") === 0 ? "good decision" : "bad decision") + ", " + (key.indexOf("won") > -1 ? "won" : "lost");
+    var s = document.createElement("span"); s.textContent = b.t;
+    verdict.appendChild(h); verdict.appendChild(s);
+  }
+
+  function render() {
+    var c = { "good-won": 0, "good-lost": 0, "bad-won": 0, "bad-lost": 0 };
+    list.forEach(function (e) { c[k(e)]++; });
+    counts.textContent = "";
+    [["good-won", "Earned"], ["good-lost", "Bad beats"], ["bad-won", "Lucky"], ["bad-lost", "Deserved"]].forEach(function (p) {
+      var d = document.createElement("div"), n = document.createElement("strong");
+      n.textContent = c[p[0]]; d.appendChild(n); d.appendChild(document.createTextNode(p[1])); counts.appendChild(d);
+    });
+    var lost = c["good-lost"] + c["bad-lost"];
+    summary.textContent = !list.length ? "No hands yet. Add one on the left."
+      : !lost ? "No lost hands yet. Add one to see how many were good decisions."
+      : c["good-lost"] + " of " + lost + " lost hand" + (lost === 1 ? "" : "s") + (c["good-lost"] === 1 ? " was a good decision." : " were good decisions.");
+    logEl.textContent = "";
+    list.slice().reverse().forEach(function (e) {
+      var b = BOX[k(e)], row = document.createElement("div"); row.className = "li";
+      var pill = document.createElement("span"); pill.className = "pill " + b.c; pill.textContent = b.n;
+      var nt = document.createElement("div"); nt.className = "note"; nt.appendChild(document.createTextNode(e.note || "(no description)"));
+      var sm = document.createElement("small"); sm.textContent = (e.ex ? "Example. " : "") + e.d + " decision, " + e.r; nt.appendChild(sm);
+      var x = document.createElement("button"); x.type = "button"; x.className = "x"; x.textContent = "Remove"; x.setAttribute("aria-label", "Remove this hand");
+      x.addEventListener("click", function () { list = list.filter(function (z) { return z.id !== e.id; }); write(); render(); });
+      row.appendChild(pill); row.appendChild(nt); row.appendChild(x); logEl.appendChild(row);
+    });
+  }
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var d = form.elements.decision.value, r = form.elements.result.value;
+    if (!d || !r) { msg.textContent = "Pick a decision and a result to continue."; return; }
+    var e = { id: "e" + Date.now(), note: note.value.trim(), d: d, r: r };
+    list.push(e); write(); showVerdict(k(e)); render();
+    msg.textContent = "Added. Review another hand if you have one.";
+    form.reset();
+  });
+  render();
+})();
+</script>
+
+</body>
+</html>
